@@ -1,7 +1,5 @@
-﻿using Interfaces.Models;
-using System;
+﻿using Interfaces.Models.Petition;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Interfaces.Services

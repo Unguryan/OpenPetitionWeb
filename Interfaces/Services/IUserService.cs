@@ -1,5 +1,5 @@
-﻿using Interfaces.Models;
-using Interfaces.Models.DB;
+﻿using Interfaces.Models.DB;
+using Interfaces.Models.User;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
