@@ -14,7 +14,6 @@ namespace WebUI.Controllers
 
         private readonly IUserService _userService;
 
-
         public AuthController(IUserService userService)
         {
             _userService = userService;
@@ -23,14 +22,14 @@ namespace WebUI.Controllers
         #region Login
 
         [HttpGet("Login")]
-        public IActionResult LoginView()
+        public async Task<IActionResult> LoginView()
         {
             if (GlobalProperties.User != null)
             {
                 return View("../_Error", "You must logout before");
             }
 
-            return View("LoginView");
+            return View("_LoginView");
         }
 
         [HttpPost("Login")]
@@ -54,7 +53,6 @@ namespace WebUI.Controllers
                 return View("../_Error", "Unsuccessfull auth");
             }
 
-            GlobalProperties.User = user;
             Response.Cookies.Append("Token", token);
 
             return Redirect("../User/Index");
@@ -65,20 +63,20 @@ namespace WebUI.Controllers
         #region Register
 
         [HttpGet("Register")]
-        public IActionResult RegisterView()
+        public async Task<IActionResult> RegisterView()
         {
             if (GlobalProperties.User != null)
             {
                 return View("../_Error", "You must logout before");
             }
 
-            return View("RegisterView");
+            return View("_RegisterView");
         }
 
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterPostAction(RegisterUserModel regUser)
         {
-            if(GlobalProperties.User != null)
+            if (GlobalProperties.User != null)
             {
                 return View("../_Error", "You must logout before");
             }
@@ -96,7 +94,6 @@ namespace WebUI.Controllers
                 return View("../_Error", "Unsuccessfull auth");
             }
 
-            GlobalProperties.User = user;
             Response.Cookies.Append("Token", token);
 
             return Redirect("../User/Index");
@@ -117,7 +114,6 @@ namespace WebUI.Controllers
                 });
                 if (res)
                 {
-                    GlobalProperties.User = null;
                     HttpContext.Response.Cookies.Delete("Token");
                     Request.Cookies.Append(new KeyValuePair<string, string>("Token", "Empty"));
                 }

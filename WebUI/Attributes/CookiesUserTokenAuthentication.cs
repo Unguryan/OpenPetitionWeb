@@ -53,14 +53,13 @@ namespace WebUI.Attributes
                 }
             }
 
-            if (res && GlobalProperties.User == null)
-            {
-                var user = userService.GetUserByToken(new TokenUsernameModel() { Token = token });
-                user.Wait();
+            //if (res)
+            //{
+            //    var user = userService.GetUserByToken(new TokenUsernameModel() { Token = token });
+            //    user.Wait();
 
-                GlobalProperties.User = user.Result;
-
-            }
+            //    GlobalProperties.User = user.Result;
+            //}
 
             if (!res)
             {

@@ -16,7 +16,7 @@ namespace WebUI.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (GlobalProperties.User == null && context != null)
+            if (context != null)
             {
                 var userService = (IUserService)context.RequestServices.GetService(typeof(IUserService));
                 var token = context?.Request.Cookies["Token"];

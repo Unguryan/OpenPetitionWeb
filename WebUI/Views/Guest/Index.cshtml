@@ -4,4 +4,10 @@
 @{
 }
 
+@using Interfaces.Models.Petition
+@using Interfaces.Services
+@model IEnumerable<IPetition>
+
 <p>Guest View</p>
+
+@await Html.PartialAsync("../Petition/_AllPetitionsView", @Model)  

@@ -7,6 +7,8 @@ namespace Interfaces.Models.Petition
         
         string Id { get; set; }
 
+        string UserId { get; set; }
+
         string Name { get; set; }
 
         string Description { get; set; }
@@ -15,6 +17,8 @@ namespace Interfaces.Models.Petition
         List<string> CurrentVoices { get; set; }
 
         uint MaxVoices { get; set; }
+
+        bool IsClosed { get; set; }
 
     }
 }

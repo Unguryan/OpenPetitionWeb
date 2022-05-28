@@ -8,13 +8,13 @@ namespace Interfaces.Services
     {
         Task<IEnumerable<IPetition>> GetPetitions();
 
-        Task<IPetition> GetPetition();
+        Task<IPetition> GetPetition(string id);
 
         Task<IPetition> AddPetition(IAddPetitionModel petition);
 
         Task<IPetition> AddVoiceToPetition(IAddVoiceToPetitionModel petition);
 
-        Task<IPetition> ClosePetition(IPetition petition);
+        Task<IPetition> ClosePetition(IClosePetitionModel petition);
 
     }
 }
