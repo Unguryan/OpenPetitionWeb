@@ -36,14 +36,14 @@ namespace IDS.Controllers
             _provider = provider;
         }
 
-        [CustomTokenAuthentication(Roles = "Owner")]
+        [CustomTokenAuthentication("Owner")]
         [HttpGet()]
         public async Task<IEnumerable<IUser>> GetUsers()
         {
            return await _context.Users.ToListAsync();
         }
 
-        [CustomTokenAuthentication(Roles = "Owner")]
+        [CustomTokenAuthentication("Owner")]
         [HttpGet("{userName}")]
         public async Task<IUser> GetUser(string userName)
         {
@@ -80,7 +80,7 @@ namespace IDS.Controllers
             return userDB.Roles;
         }
 
-        [CustomTokenAuthentication(Roles = "Owner")]
+        [CustomTokenAuthentication("Owner")]
         [HttpPost("ChangeRoles")]
         public async Task<IUser> ChangeRolesUser(ChangeRolesModel changeRolesModel)
         {
@@ -155,7 +155,7 @@ namespace IDS.Controllers
         }
 
         [HttpPost("Logout")]
-        [CustomTokenAuthentication(Roles = "Owner, Admin, User")]
+        [CustomTokenAuthentication("Owner, Admin, User")]
         public async Task<bool> Logout(TokenUsernameModel user)
         {
             if (string.IsNullOrEmpty(user.Token))

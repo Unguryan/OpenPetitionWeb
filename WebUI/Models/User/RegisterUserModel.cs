@@ -1,6 +1,7 @@
 ﻿using Interfaces.Models.User;
+using System.ComponentModel.DataAnnotations;
 
-namespace IDS.Models
+namespace WebUI.Models.User
 {
     public class RegisterUserModel : IRegisterUserModel
     {
@@ -9,6 +10,7 @@ namespace IDS.Models
 
         public string UserName { get; set; }
 
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
     }

@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@using WebUI.Models.User
+@model RegisterUserModel
+
+<p>Register View</p>
+
+<form asp-action="RegisterPostAction" role="form">
+    <div class="container">
+        <div>
+            <div>
+            <label asp-for="Name"></label>
+                <div>
+                    <input asp-for="Name"/>
+                </div>    
+            </div>
+
+            <div>
+            <label asp-for="UserName"></label>
+                <div>
+                    <input asp-for="UserName"/>
+                </div>    
+            </div>
+
+            <div>
+            <label asp-for="Password"></label>
+                <div>
+                    <input asp-for="Password"/>
+                </div>    
+            </div>
+        </div>
+
+        <input type="submit" value="Register"/>
+    </div>
+</form>

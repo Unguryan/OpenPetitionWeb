@@ -1,16 +1,18 @@
-﻿using IDS.Interfaces;
+﻿using Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Linq;
+using WebUI.Models.User;
 
-namespace IDS.Attributes
+namespace WebUI.Attributes
 {
-    public class CustomTokenAuthentication : Attribute, IAuthorizationFilter
+    public class CookiesUserTokenAuthentication : Attribute, IAuthorizationFilter
     {
+
         private readonly string _roles;
 
-        public CustomTokenAuthentication(string roles)
+        public CookiesUserTokenAuthentication(string roles)
         {
             _roles = roles;
         }
@@ -19,29 +21,18 @@ namespace IDS.Attributes
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var tokenManager = (ITokenManager)context.HttpContext.RequestServices.GetService(typeof(ITokenManager));
+            var userService = (IUserService)context.HttpContext.RequestServices.GetService(typeof(IUserService));
 
+            var token = context.HttpContext.Request.Cookies["Token"];
             var res = true;
-            if (!context.HttpContext.Request.Headers.ContainsKey("Authorization") &&
-                !context.HttpContext.Request.Query.ContainsKey("token"))
+            if (string.IsNullOrEmpty(token))
             {
                 res = false;
             }
 
             if (res)
             {
-                var token = context.HttpContext.Request.Headers["Authorization"];
-                    //?? .FirstOrDefault(x => x.Key == "token").Value;
-                if (string.IsNullOrEmpty(token))
-                {
-                    token = context.HttpContext.Request.Query["token"];
-                }
-
-                if(token.ToString().Contains("Bearer "))
-                {
-                    token = token.ToString().Replace("Bearer ", "");
-                }
-                var result = tokenManager.VerifyToken(token);
+                var result = userService.VerifyToken(new TokenUsernameModel() { Token = token });
                 result.Wait();
                 if (!result.Result)
                 {
@@ -49,7 +40,7 @@ namespace IDS.Attributes
                 }
                 else
                 {
-                    var roles = tokenManager.GetUserRoles(token);
+                    var roles = userService.GetUserRoles(new TokenUsernameModel() { Token = token });
                     roles.Wait();
 
                     var expectedRoles = roles.Result.ToLower().Replace(" ", "").Split(',');
@@ -60,6 +51,15 @@ namespace IDS.Attributes
                         res = false;
                     }
                 }
+            }
+
+            if (res && GlobalProperties.User == null)
+            {
+                var user = userService.GetUserByToken(new TokenUsernameModel() { Token = token });
+                user.Wait();
+
+                GlobalProperties.User = user.Result;
+
             }
 
             if (!res)

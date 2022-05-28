@@ -1,6 +1,6 @@
 ﻿using Interfaces.Models.User;
 
-namespace IDS.Models
+namespace WebUI.Models.User
 {
     public class ChangeRolesModel : IChangeRolesModel
     {
