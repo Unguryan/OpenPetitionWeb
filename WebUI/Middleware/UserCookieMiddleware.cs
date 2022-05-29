@@ -26,6 +26,10 @@ namespace WebUI.Middleware
                 {
                     GlobalProperties.User = user;
                 }
+                else
+                {
+                    GlobalProperties.User = null;
+                }
             }
 
             await _next(context);
