@@ -5,22 +5,34 @@
 }
 
 <head>
-    <style>
+    @*<style>
         .link_button {
-            -webkit-border-radius: 4px;
-            -moz-border-radius: 4px;
-            border-radius: 4px;
-            border: solid 1px #20538D;
-            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
-            -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-            -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
-            background: #4479BA;
-            color: #FFF;
-            padding: 8px 12px;
-            text-decoration: none;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        border: solid 1px #20538D;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+        -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+        background: #4479BA;
+        color: #FFF;
+        padding: 8px 12px;
+        text-decoration: none;
         }
-    </style>
+        </style>*@
+
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="~/lib/aspnet-signalr/signalr.min.js"></script>
+    <script src="~/js/notification.js"></script>*@
+    @*<script scr="~/lib/jquery/jquery.min.js"></script>*@
+    @*<script type="text/javascript">
+
+        $.noConflict();
+
+    </script>*@
+
+
 </head>
 
 @using Interfaces.Models.Petition
@@ -29,11 +41,21 @@
 
 <p>User View</p>
 
-<div style="float: right; margin-right:20px; vertical-align: middle;"> 
-    <a class="link_button" style="margin-right:20px;" asp-controller="Petition" asp-action="AddPetition"> Add Petition </a>
-    <a class="link_button" asp-controller="Petition" asp-action="ShowMyPetition"> Show My Petition </a>
+<div style="float: right; margin-right:20px; vertical-align: middle;">
+    <a class="btn btn-outline-secondary" style="margin-right:20px;" asp-controller="Petition" asp-action="AddPetition"> Add Petition </a>
+    <a class="btn btn-outline-secondary" asp-controller="Petition" asp-action="ShowMyPetition"> Show My Petition </a>
 </div>
-<div style="float: left;">
-    @await Html.PartialAsync("../Petition/_AllPetitionsView", @Model)  
+<div>
+    @await Html.PartialAsync("../Petition/_AllPetitionsView", @Model)
 </div>
+
+@*<link rel="stylesheet" href="~/lib/jquery/jquery.min.js" />
+    <script scr="~/lib/jquery/jquery.min.js"></script>*@
+@*<script href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>*@
+
+
+
+@*<script src="~/lib/aspnet-signalr/signalr.min.js"></script>
+    <script src="~/js/notification.js"></script>
+*@
 

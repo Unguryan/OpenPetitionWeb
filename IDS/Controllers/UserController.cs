@@ -60,8 +60,12 @@ namespace IDS.Controllers
 
             var userToken = await _context.Tokens.FirstOrDefaultAsync(u => u.Token.Equals(tokenUsername.Token));
 
-            var userDB = await _context.Users.FirstOrDefaultAsync(u => u.Id == userToken.UserId);
+            if(userToken == null || string.IsNullOrEmpty(userToken.UserId))
+            {
+                return new User();
+            }
 
+            var userDB = await _context.Users.FirstOrDefaultAsync(u => u.Id == userToken.UserId);
             return userDB;
         }
 
@@ -74,6 +78,10 @@ namespace IDS.Controllers
             }
 
             var userToken = await _context.Tokens.FirstOrDefaultAsync(u => u.Token.Equals(tokenUsername.Token));
+            if (userToken == null || string.IsNullOrEmpty(userToken.UserId))
+            {
+                return string.Empty;
+            }
 
             var userDB = await _context.Users.FirstOrDefaultAsync(u => u.Id == userToken.UserId);
 
@@ -165,6 +173,11 @@ namespace IDS.Controllers
 
             var userToken = await _context.Tokens.FirstOrDefaultAsync(u => u.Token.Equals(user.Token));
 
+            if (userToken == null || string.IsNullOrEmpty(userToken.UserId))
+            {
+                return false;
+            }
+
             var userDB = await _context.Users.FirstOrDefaultAsync(u => u.Id == userToken.UserId);
 
             if (userDB == null)
@@ -184,6 +197,11 @@ namespace IDS.Controllers
             }
 
             var userToken = await _context.Tokens.FirstOrDefaultAsync(u => u.Token.Equals(tokenUsername.Token));
+
+            if (userToken == null || string.IsNullOrEmpty(userToken.UserId))
+            {
+                return false;
+            }
             var userDB = await _context.Users.FirstOrDefaultAsync(u => u.Id == userToken.UserId);
 
             return userToken != null && userDB != null;

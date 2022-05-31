@@ -1,8 +1,10 @@
 ﻿using Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using WebUI.Attributes;
+using WebUI.Hubs;
 using WebUI.Models.Petition;
 using WebUI.Models.User;
 
@@ -15,9 +17,27 @@ namespace WebUI.Controllers
 
         private readonly IPetitionService _petitionService;
 
-        public PetitionController(IPetitionService petitionService, IUserService userService)
+        private readonly IHubContext<NotificationHub> _hubContext;
+
+        public PetitionController(IPetitionService petitionService, IHubContext<NotificationHub> hubContext)
         {
             _petitionService = petitionService;
+            _hubContext = hubContext;
+        }
+
+        [HttpGet("ShowMyPetition")]
+        public async Task<IActionResult> ShowMyPetition()
+        {
+            if (GlobalProperties.User == null)
+            {
+                //return;
+                return View("../_Error", "You must login before");
+            }
+
+            var res = await _petitionService.GetUserPetitions(GlobalProperties.User.Id);
+            //await TryUpdateModelAsync(res);
+
+            return View("../User/Index", res);
         }
 
         [HttpGet("AddPetition")]
@@ -41,6 +61,7 @@ namespace WebUI.Controllers
 
             var res = await _petitionService.AddPetition(petition);
 
+            
             //if (!string.IsNullOrEmpty(res.Id))
             //{
             //    await Response.WriteAsync("<script>alert('sing was successfull')</script>");
@@ -59,6 +80,11 @@ namespace WebUI.Controllers
 
             var res = await _petitionService.AddVoiceToPetition(
                 new AddVoiceToPetitionModel() { IdPetition = id, IdUser = GlobalProperties.User.Id });
+
+            if (!string.IsNullOrEmpty(GlobalProperties.Id))
+            {
+                await _hubContext.Groups.AddToGroupAsync(GlobalProperties.Id, $"{res.UserId}/{res.Name}/{res.Description}");
+            };
 
             //if (!string.IsNullOrEmpty(res.Id))
             //{
@@ -85,6 +111,9 @@ namespace WebUI.Controllers
 
             var res = await _petitionService.ClosePetition(
                 new ClosePetitionModel() { IdPetition = id, IdUser = GlobalProperties.User.Id });
+
+            await _hubContext.Clients.Groups($"{res.UserId}/{res.Name}/{res.Description}")
+                .SendAsync("displayNotification", $"{res.Name} was closed");
 
             //if (!string.IsNullOrEmpty(res.Id))
             //{

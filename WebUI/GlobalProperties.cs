@@ -1,4 +1,5 @@
 ﻿using Interfaces.Models.DB;
+using System.Security.Policy;
 
 namespace WebUI
 {
@@ -6,6 +7,8 @@ namespace WebUI
     {
 
         public static IUser User { get; set; }
+
+        public static string Id { get; set; }
 
     }
 }

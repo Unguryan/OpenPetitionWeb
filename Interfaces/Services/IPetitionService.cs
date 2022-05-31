@@ -10,6 +10,8 @@ namespace Interfaces.Services
 
         Task<IPetition> GetPetition(string id);
 
+        Task<IEnumerable<IPetition>> GetUserPetitions(string userId);
+
         Task<IPetition> AddPetition(IAddPetitionModel petition);
 
         Task<IPetition> AddVoiceToPetition(IAddVoiceToPetitionModel petition);

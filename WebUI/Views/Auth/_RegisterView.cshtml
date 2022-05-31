@@ -8,32 +8,58 @@
 @model RegisterUserModel
 
 <p>Register View</p>
-
+@*
 <form asp-action="RegisterPostAction" role="form">
-    <div class="container">
-        <div>
-            <div>
+        <div class="col-md-3>
+            <div class="mt-2">
             <label asp-for="Name"></label>
                 <div>
-                    <input asp-for="Name"/>
+                    <input class="form-control" asp-for="Name"/>
                 </div>    
             </div>
 
-            <div>
+            <div class="mt-2">
             <label asp-for="UserName"></label>
                 <div>
-                    <input asp-for="UserName"/>
+                    <input class="form-control" asp-for="UserName"/>
                 </div>    
             </div>
 
-            <div>
+            <div class="mt-2">
             <label asp-for="Password"></label>
                 <div>
-                    <input asp-for="Password"/>
+                    <input class="form-control" asp-for="Password"/>
+                </div>    
+            </div>
+
+            <input type="submit" class="btn btn-success mt-2" value="Register"/>
+         </div>
+</form>*@
+
+<form asp-action="RegisterPostAction" role="form">
+        <div class="col-md-3">
+            <div class="mt-2">
+            <label asp-for="Name"></label>
+                <div>
+                    <input class="form-control" asp-for="Name"/>
+                </div>    
+            </div>
+
+            <div class="mt-2">
+            <label asp-for="UserName"></label>
+                <div>
+                    <input class="form-control" asp-for="UserName"/>
+                </div>    
+            </div>
+
+            <div class="mt-2">
+            <label asp-for="Password"></label>
+                <div>
+                    <input class="form-control" asp-for="Password"/>
                 </div>    
             </div>
         </div>
 
-        <input type="submit" value="Register"/>
+        <button type="submit" class="btn btn-success mt-2">Register</button>
     </div>
 </form>

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebUI.DB;
+using WebUI.Hubs;
 using WebUI.Middleware;
 using WebUI.Services;
 
@@ -30,6 +31,8 @@ namespace WebUI
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPetitionService, PetitionService>();
             services.AddHttpContextAccessor();
+
+            services.AddSignalR();
 
             services.AddControllersWithViews();
             services.AddMvc();
@@ -57,6 +60,8 @@ namespace WebUI
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Guest}/{action=Index}");
+
+                endpoints.MapHub<NotificationHub>("/NotificationHub");
             });
         }
     }
